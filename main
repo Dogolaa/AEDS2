@@ -1,0 +1,41 @@
+#include <fstream>
+#include <iostream>
+
+using namespace std;
+
+int main(int argc, char**argv) {
+     
+    string line;
+    ifstream myfile ("BD_veiculos.txt");
+    if (myfile.is_open()){
+        while ( !myfile.eof()){
+            myfile >> line;
+            cout << "string: " << line << endl;
+        }
+        myfile.close();
+    }
+    else 
+        cout << "Unable to open file";
+    
+   typedef struct Tcars{
+        
+        string modelo;
+        string marca;
+        string tipo;
+        int ano;
+        int km;
+        float potencia;
+        string combustivel;
+        string cambio;
+        string direcao;
+        string cor;
+        string portas;
+        string placa;
+    };
+    
+    Tcars *bd[50];
+    bd[i] = new Tveiculo;
+    
+    
+    return 0;
+}
