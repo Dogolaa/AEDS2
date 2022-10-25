@@ -20,11 +20,43 @@ typedef struct Tcars{
         string cor;
         int portas;
         string placa;
+        float valor;
     };
-
-    Tcars * busca(Tcars * bd[], int tam, string placa){
-        for (int i = 0)
+    
+     int printCarro(Tcars * bd[],int tam,int i){
+          
+             cout << bd[i]->modelo << " ";
+             cout << bd[i]->marca << " ";
+             cout << bd[i]->tipo << " ";
+             cout << bd[i]->ano << " ";
+             cout << bd[i]->km << " ";
+             cout << bd[i]->potencia << " ";
+             cout << bd[i]->combustivel << " ";
+             cout << bd[i]->cambio << " ";
+             cout << bd[i]->direcao << " ";
+             cout << bd[i]->cor << " ";
+             cout << bd[i]->portas << " ";
+             cout << bd[i]->placa << " ";
+             cout << bd[i]->valor << " ";
+         
+          
+      }
+    
+ int busca(Tcars * bd[], int tam, string placa){
+          int loc;
+        for (int i = 0; i < tam; i++){
+            if(bd[i]->placa == placa){
+                cout << "Carro encontrado: "<< endl;
+                printCarro(bd,tam,i);
+                return loc;
+            }
+            loc ++;
+        }
+          cout << "Veiculo nao encontrado" << endl;
+          return -1;
     }
+
+     
 
 int main(int argc, char**argv) {
     
@@ -33,8 +65,9 @@ int main(int argc, char**argv) {
     ifstream myfile ("BD_veiculos.txt");
     Tcars *bd[50];
     int tam = 0;
+    string buscaplaca;
     
-    if (myfile.is_open()){
+    if(myfile.is_open()){
         while ( !myfile.eof()){
    
             bd[tam] = new Tcars;
@@ -50,32 +83,15 @@ int main(int argc, char**argv) {
             myfile >> bd[tam]->cor;
             myfile >> bd[tam]->portas;
             myfile >> bd[tam]->placa;
+            myfile >> bd[tam]->valor;
             tam++;
         }
-        tam--;
          myfile.close();
         
-         Tveiculo * p = busca(bd, tam, "ZXQ7868");
-         if (p){
-             cout << "Veiculo Encontrado" << endl;
-             cout << p ->marca << " " << p-> modelo << endl;
-         }
-                 
-        
-       for (int i = 0; i < tam; i++){
-             cout << bd[i]->modelo << " ";
-             cout << bd[i]->marca << " ";
-             cout << bd[i]->tipo << " ";
-             cout << bd[i]->ano << " ";
-             cout << bd[i]->km << " ";
-             cout << bd[i]->potencia << " ";
-             cout << bd[i]->combustivel << " ";
-             cout << bd[i]->cambio << " ";
-             cout << bd[i]->direcao << " ";
-             cout << bd[i]->cor << " ";
-             cout << bd[i]->portas << " ";
-             cout << bd[i]->placa << " ";
-         }
+      cout << "Insira a placa que deseja buscar" << endl;   
+      cin >> buscaplaca;
+    busca(bd,tam,buscaplaca);
+    
     
     for (int i = tam; i < 50; i++)
         bd[i]= NULL;
@@ -83,10 +99,10 @@ int main(int argc, char**argv) {
         delete (bd[i]);
          }
     
-    else 
+    else{
         cout << "Unable to open file";
-   
-   
+    }
+     
 
     return 0;
 }
