@@ -20,8 +20,10 @@ typedef struct Tcars{
         string cor;
         int portas;
         string placa;
-        float valor;
+        int valor;
     };
+    
+    
     
      int printCarro(Tcars * bd[],int tam,int i){
           
@@ -40,7 +42,7 @@ typedef struct Tcars{
              cout << bd[i]->valor << " ";
          
           
-      }
+         }
     
  int busca(Tcars * bd[], int tam, string placa){
           int loc;
@@ -55,9 +57,35 @@ typedef struct Tcars{
           cout << "Veiculo nao encontrado" << endl;
           return -1;
     }
+ 
+ void buscaDez(Tcars * bd[], int tam, int valor)
+ {
+          int tam_aux = 10;
+          Tcars *listaValor[tam_aux+1];
+          
+          for(int i = 0; i < tam_aux; i++){
+              listaValor[i] = NULL;
+          }
+        for(int j = 0; j < tam; j++){
+            for(int i = 0; j < tam; i++){
+                bool cond1 = listaValor[i] == NULL;
+                bool cond2 = (abs(bd[j]->valor - valor) < abs(listaValor[i]->valor - valor));
+                if (cond1 || cond2){
+                    for(int k = 9; k >= i; k--){
+                        listaValor[k+1] = listaValor[k];
+                         }
+                    listaValor[i] = bd[j];
+                    break;
+                }
+            }
+        }  
+        cout << " Carros com preço proximo \n" <<endl;
+        for(int i = 0; i < tam_aux; i++){
+        printCarro(listaValor,tam, i);
+        }
+ }
     
-    
- int removeCarro(cars * bd[], int *tam,int index){
+ int removeCarro(Tcars * bd[], int *tam,int index){
      delete(bd[index]);
      for(int i = index; i < *tam - 1;i++){
          bd[i] = bd[i+1];
@@ -77,6 +105,7 @@ int main(int argc, char**argv) {
     Tcars *bd[50];
     int tam = 0;
     string buscaplaca;
+    float buscavalor;
     
     if(myfile.is_open()){
         while ( !myfile.eof()){
@@ -102,6 +131,11 @@ int main(int argc, char**argv) {
       cout << "Insira a placa que deseja buscar" << endl;   
       cin >> buscaplaca;
     busca(bd,tam,buscaplaca);
+    cout << endl;
+    cout << "Insira o valor que deseja buscar" << endl;
+    cin >> buscavalor;
+    buscaDez(bd,tam,buscavalor);
+    
     
     
     for (int i = tam; i < 50; i++)
