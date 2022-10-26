@@ -55,6 +55,17 @@ typedef struct Tcars{
           cout << "Veiculo nao encontrado" << endl;
           return -1;
     }
+    
+    
+ int removeCarro(cars * bd[], int *tam,int index){
+     delete(bd[index]);
+     for(int i = index; i < *tam - 1;i++){
+         bd[i] = bd[i+1];
+     }
+     if (*tam > index){
+         *tam -= 1;
+     }
+ }  
 
      
 
